@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import os
 
 request = requests.get('https://wrongplanet.net/forums/viewtopic.php?t=419468')
 content = request.content
@@ -18,16 +19,14 @@ messages = []
 for post in posts:
     user = post.find_previous_sibling('div', attrs={'class': 'user-col'})
     if user:
-        
-        user_name_tag = user.find('a', href=True)
-        if user_name_tag:
-            user_name = user_name_tag.text.strip()
+        user_name = user.find('a', href=True)
+        if user_name:
+            user_name = user_name.text.strip()
             user_names.append(user_name)
         
-       
-        gender_tag = user.find(text=lambda text: text and 'Gender:' in text)
-        if gender_tag:
-            gender = gender_tag.split('Gender:')[1].strip()
+        gender = user.find(string=lambda string: string and 'Gender:' in string)
+        if gender:
+            gender = gender.split('Gender:')[1].strip()
             genders.append(gender)
         else:
             genders.append(None)
@@ -45,5 +44,8 @@ df = pd.DataFrame({
     'Conteúdo da Mensagem': messages
 })
 
+path = "extracao-de-dados\wrong-planet\csv"
+fileName = "resultParentStyle.csv"
+fullNamePath = os.path.join(path, fileName)
 
-df.to_csv('resultado.csv', index=False)
+df.to_csv(fullNamePath, index=False)
