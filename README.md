@@ -23,3 +23,9 @@ Este projeto realiza a **extração de dados de postagens em fóruns de discuss�
 │   ├── extraidos/              # Arquivos CSV extraídos do fórum
 │   └── resultados/             # Arquivos CSV com análise de sentimento
 └── README.md                   # Documentação do projeto
+└── requeriments.txt            # dependencias necessárias
+```
+## Instalação de dependencias
+```plaintext
+pip install -r .\requeriments.txt
+```
